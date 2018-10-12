@@ -26,6 +26,7 @@
       </div>
     </div>
     <div class=reviews>
+      <h3>User Reviews</h3>
       <% @product.reviews.each do |review| %>
         <%= render 'review', user: User.find_by(id: review.user_id), description: review[:description], rating: review[:rating] %><br/>
       <% end %>
