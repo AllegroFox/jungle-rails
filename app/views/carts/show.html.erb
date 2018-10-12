@@ -4,6 +4,13 @@
     <h1>My Cart</h1>
   </header>
 
+<% if cart.empty? %>
+
+  <div>You should probably buy some stuff. Your cart is lonely!</div>
+  <%= link_to "Go Home!", root_path, class: 'btn btn-lg btn-primary' %>
+
+<% else %>
+
   <div class="panel panel-default items">
     <table class="table table-bordered">
       <thead>
@@ -48,5 +55,7 @@
       <% end %>
     </div>
   </div>
+
+<% end %>
 
 </section>
