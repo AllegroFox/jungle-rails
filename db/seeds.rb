@@ -132,5 +132,34 @@ cat3.products.create!({
   price: 2_483.75
 })
 
+##USERS
+
+puts "Re-creating Sample Users ..."
+
+User.destroy_all
+
+(0..5).each do |i|
+  User.create!({
+    email: Faker::Internet.email,
+    first_name: Faker::StarTrek.villain,
+    last_name: Faker::StarTrek.villain,
+    password_digest: "I'm a digest!!"
+  })
+end
+
+## REVIEWS
+
+puts "Re-creating Sample Reviews ..."
+
+Review.destroy_all
+
+(0..50).each do |i|
+  Review.create!({
+    product: Product.all.sample,
+    user: User.all.sample,
+    description: Faker::Hipster.paragraph(4),
+    rating: rand(0..5)
+  })
+end
 
 puts "DONE!"

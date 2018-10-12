@@ -25,6 +25,11 @@
         </dl>
       </div>
     </div>
+    <div class=reviews>
+      <% @product.reviews.each do |review| %>
+        <%= render 'review', user: User.find_by(id: review.user_id), description: review[:description], rating: review[:rating] %><br/>
+      <% end %>
+    </div>
 
   </article>
 
