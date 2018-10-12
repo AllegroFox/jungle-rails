@@ -37,7 +37,9 @@
   </div>
 
   <div class="order-summary email">
-    <h5>@user.order.email</h5>
+    <h5>
+      <%= @user.order.email %>
+    </h5>
   </div>
 
   <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
