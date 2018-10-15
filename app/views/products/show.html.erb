@@ -26,28 +26,38 @@
       </div>
     </div>
 
+    <% if current_user %>
+
     <h3>Review this product:</h3>
 
       <%= form_for [@product, @review] do |f| %>
         <ul>
-          <%= f.fields_for :review do |reviews_form| %>
             <li>
-              <%= reviews_form.label :description %>
-              <%= reviews_form.text_area :description %>
+              <%= f.label :description %>
+              <%= f.text_area :description %>
               <br/>
-              <%= reviews_form.label :rating %>
-              <%= select_tag(:rating, options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]])) %>
+              <%= f.label :rating %>
+              <%= f.select(:rating, options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]]), include_blank: true) %>
               <br/>
               <%= submit_tag('Submit Review')%>
             </li>
-          <% end %>
         </ul>
       <% end %>
 
+    <% else %>
+
+    <h4><a href='/login'>Log in</a> to leave a review!</h4>
+
+    <% end %>
+
     <div class=reviews>
       <h3>User Reviews</h3>
-      <% @product.reviews.each do |review| %>
-        <%= render 'review', user: User.find_by(id: review.user_id), description: review[:description], rating: review[:rating] %><br/>
+      <% @product.reviews.reverse_each do |review| %>
+        <%= render 'review', user: User.find_by(id: review.user_id), description: review[:description], rating: review[:rating] %>
+        <% if current_user.id == review.user_id %>
+          <%= link_to 'Delete', product_review_path(@product.id, review.id), method: :delete, data: {confirm: "Delete review?"} %>
+        <% end %>
+        <br/>
       <% end %>
     </div>
 
