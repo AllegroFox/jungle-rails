@@ -39,6 +39,39 @@ RSpec.describe User, type: :model do
       @user = User.new(first_name: 'Fox', last_name: nil, email: 'AllegroFox@test.com', password: 'Foxy', password_confirmation: 'Foxy')
       expect(@user).to_not be_valid
     end
+  end
+
+  describe '.authenticate_with_credentials' do
+
+    it 'should return an instance of user for a valid user' do
+      @user = User.create(first_name: 'Fox', last_name: 'Socks', email: 'AllegroFox@test.com', password: 'Foxy', password_confirmation: 'Foxy')
+      @authenticated = User.authenticate_with_credentials('AllegroFox@test.com', 'Foxy')
+      expect(@authenticated).to eq(@user)
+    end
+
+    it 'should return an instance of user for a valid email with trailing spaces' do
+      @user = User.create(first_name: 'Fox', last_name: 'Socks', email: 'AllegroFox@test.com', password: 'Foxy', password_confirmation: 'Foxy')
+      @authenticated = User.authenticate_with_credentials('AllegroFox@test.com   ', 'Foxy')
+      expect(@authenticated).to eq(@user)
+    end
+
+    it 'should return an instance of user for a valid email with wrong case' do
+      @user = User.create(first_name: 'Fox', last_name: 'Socks', email: 'AllegroFox@test.com', password: 'Foxy', password_confirmation: 'Foxy')
+      @authenticated = User.authenticate_with_credentials('ALLEGROFOX@test.com', 'Foxy')
+      expect(@authenticated).to eq(@user)
+    end
+
+    it 'should return nil for an invalid password' do
+      @user = User.create(first_name: 'Fox', last_name: 'Socks', email: 'AllegroFox@test.com', password: 'Foxy', password_confirmation: 'Foxy')
+      @authenticated = User.authenticate_with_credentials('AllegroFox@test.com', 'Box')
+      expect(@authenticated).to eq(nil)
+    end
+
+    it 'should return nil for an invalid email' do
+      @user = User.create(first_name: 'Fox', last_name: 'Socks', email: 'AllegroFox@test.com', password: 'Foxy', password_confirmation: 'Foxy')
+      @authenticated = User.authenticate_with_credentials('Allegro@test.com', 'Foxy')
+      expect(@authenticated).to eq(nil)
+    end
 
   end
 end

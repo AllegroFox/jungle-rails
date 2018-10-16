@@ -27,7 +27,6 @@ RSpec.describe Product, type: :model do
       expect(@product).to_not be_valid
     end
 
-
     it 'is not valid without a category' do
       @category = Category.new(name: 'socks')
       @product = Product.new(name: 'Fox Socks', description: 'Fuzzy feet holders', price: '14.99', quantity: '490', category: nil)
