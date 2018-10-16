@@ -12,6 +12,6 @@ class Product < ActiveRecord::Base
   validates :category, presence: true
 
   def average_rating
-    @ratings = self.reviews.average(:rating)
+    self.reviews.average(:rating)
   end
 end
