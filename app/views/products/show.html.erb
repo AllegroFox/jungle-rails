@@ -22,6 +22,8 @@
           <dd><%= @product.quantity %></dd>
           <dt>Price</dt>
           <dd><%= @product.price %></dd>
+          <dt>Average User Rating</dt>
+          <dd><%= @product.average_rating %></dd>
         </dl>
       </div>
     </div>
@@ -54,7 +56,7 @@
       <h3>User Reviews</h3>
       <% @product.reviews.reverse_each do |review| %>
         <%= render 'review', user: User.find_by(id: review.user_id), description: review[:description], rating: review[:rating] %>
-        <% if current_user.id == review.user_id %>
+        <% if current_user && current_user.id == review.user_id %>
           <%= link_to 'Delete', product_review_path(@product.id, review.id), method: :delete, data: {confirm: "Delete review?"} %>
         <% end %>
         <br/>

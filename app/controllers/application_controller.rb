@@ -3,6 +3,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  # def average_rating
+  #   @ratings = self.reviews.average(:rating)
+  #   @ratings.sum(:value) / @ratings.count
+  # end
+
   private
 
   def cart
@@ -37,5 +42,7 @@ class ApplicationController < ActionController::Base
   def authorize
     redirect_to '/login' unless current_user
   end
+
+
 
 end
